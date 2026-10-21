@@ -1,0 +1,7 @@
+# Admin password — never commit
+secret.php
+
+# Live vote data
+data/votes.json
+
+.DS_Store

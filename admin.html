@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Gamemode Tag Admin</title>
+  <link rel="icon" href="assets/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <main class="wrap">
+    <header class="hero">
+      <img class="logo" src="assets/logo.png" alt="Gamemode Tag logo" style="width:120px;height:120px;border-radius:20px">
+      <div class="eyebrow">Challenger Strawberry Park</div>
+      <h1>Admin</h1>
+    </header>
+
+    <!-- Login -->
+    <section class="panel" id="loginPanel" hidden>
+      <h2>Log in</h2>
+      <form id="loginForm" autocomplete="on">
+        <div class="field">
+          <label for="username">Username</label>
+          <input id="username" name="username" autocomplete="username" required>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required>
+        </div>
+        <button class="btn" type="submit">Log in</button>
+        <p class="error-text" id="loginError"></p>
+      </form>
+    </section>
+
+    <!-- Dashboard -->
+    <div id="dash" hidden>
+      <section class="panel">
+        <div class="row spread">
+          <div class="pills">
+            <span id="openPill" class="pill"><span class="dot"></span><span id="openText"></span></span>
+            <span class="pill" id="roundPill"></span>
+            <span class="pill tabular" id="totalPill"></span>
+          </div>
+          <div class="row">
+            <a class="btn ghost small" href="index.html" style="text-decoration:none">View vote page</a>
+            <button class="btn ghost small" id="logoutBtn" type="button">Log out</button>
+          </div>
+        </div>
+        <div class="row" style="margin-top:14px">
+          <button class="btn" id="toggleBtn" type="button">Close voting</button>
+          <button class="btn danger" id="resetBtn" type="button">Reset votes &amp; start new round</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Add a gamemode</h2>
+        <form id="addForm">
+          <div class="field">
+            <label for="gmName">Name</label>
+            <input id="gmName" maxlength="40" placeholder="e.g. Hot Potato Tag" required>
+          </div>
+          <div class="field">
+            <label for="gmDesc">Description <span class="muted">(optional)</span></label>
+            <textarea id="gmDesc" maxlength="160" placeholder="How does it work?"></textarea>
+          </div>
+          <button class="btn" type="submit">Add gamemode</button>
+          <p class="error-text" id="addError"></p>
+        </form>
+      </section>
+
+      <section class="panel">
+        <h2>Gamemodes</h2>
+        <div class="admin-list" id="adminList"></div>
+      </section>
+    </div>
+  </main>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="assets/admin.js"></script>
+</body>
+</html>

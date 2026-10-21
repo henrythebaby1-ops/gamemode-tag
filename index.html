@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gamemode Tag</title>
+  <meta name="description" content="Vote for the next Tag gamemode at Challenger Strawberry Park.">
+  <link rel="icon" href="assets/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <main class="wrap">
+    <nav class="topbar">
+      <div id="signedOut">
+        <button class="btn ghost small" id="loginOpen" type="button">Log in</button>
+      </div>
+      <div id="signedIn" class="row" hidden>
+        <span class="muted">Signed in as <b id="whoName"></b></span>
+        <a class="btn small" href="admin.html">Admin panel</a>
+        <button class="btn ghost small" id="logoutBtn" type="button">Log out</button>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <img class="logo" src="assets/logo.png" alt="Gamemode Tag logo">
+      <div class="eyebrow">Challenger Strawberry Park</div>
+      <h1>Vote the next mode</h1>
+    </header>
+
+    <div class="status">
+      <div class="pills">
+        <span id="openPill" class="pill"><span class="dot"></span><span id="openText">Loading…</span></span>
+        <span class="pill" id="roundPill">Round –</span>
+        <span class="pill tabular" id="totalPill">0 votes</span>
+        <span class="pill tabular" id="resetPill" hidden></span>
+      </div>
+      <button class="refresh" id="refreshBtn" type="button" title="Refresh now">
+        <svg class="ring" viewBox="0 0 24 24" aria-hidden="true">
+          <circle class="track" cx="12" cy="12" r="9"></circle>
+          <circle class="prog" id="ringProg" cx="12" cy="12" r="9"></circle>
+        </svg>
+        <span>Updates in <b class="tabular" id="countdown">1:00</b></span>
+      </button>
+    </div>
+
+    <div class="winner" id="winner" hidden></div>
+
+    <section class="modes" id="modes" aria-live="polite"></section>
+
+    <p class="note">One vote per player — tap another mode to switch. Results update every minute.</p>
+  </main>
+
+  <dialog class="login-dialog" id="loginDialog">
+    <form id="loginForm" method="dialog" autocomplete="on">
+      <div class="row spread" style="margin-bottom:12px">
+        <h2 style="margin:0">Log in</h2>
+        <button class="btn ghost small" id="loginClose" type="button" aria-label="Close">✕</button>
+      </div>
+      <div class="field">
+        <label for="username">Username</label>
+        <input id="username" name="username" autocomplete="username" required>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+      </div>
+      <button class="btn" type="submit" style="width:100%">Log in</button>
+      <p class="error-text" id="loginError"></p>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="assets/app.js"></script>
+</body>
+</html>

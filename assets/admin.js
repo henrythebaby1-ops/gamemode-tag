@@ -1,23 +1,11 @@
 // Gamemode Tag — admin panel
 (function () {
   var state = null;
-  var csrf = '';
   var editing = null;
 
   var $ = function (id) { return document.getElementById(id); };
 
-  function api(action, body) {
-    var opts = { credentials: 'same-origin', headers: { 'X-CSRF-Token': csrf } };
-    if (body !== undefined) {
-      opts.method = 'POST';
-      opts.headers['Content-Type'] = 'application/json';
-      opts.body = JSON.stringify(body);
-    }
-    return fetch('api.php?action=' + action + '&_=' + Date.now(), opts).then(function (r) {
-      return r.json().catch(function () { return { error: 'Server error (' + r.status + ')' }; })
-        .then(function (data) { data._ok = r.ok; data._status = r.status; return data; });
-    });
-  }
+  var api = window.gtApi;
 
   function toast(msg, isErr) {
     var t = $('toast');
@@ -39,10 +27,9 @@
   }
 
   function apply(d) {
-    if (d._status === 403) { csrf = ''; showLogin(); toast(d.error || 'Please log in', true); return false; }
+    if (d._status === 403) { showLogin(); toast(d.error || 'Please log in', true); return false; }
     if (!d.gamemodes) return false;
     state = d;
-    if (d.csrf) csrf = d.csrf;
     if (!d.admin) { showLogin(); return true; }
     $('loginPanel').hidden = true;
     $('dash').hidden = false;
@@ -98,7 +85,7 @@
   });
 
   $('logoutBtn').addEventListener('click', function () {
-    api('logout', {}).then(function () { csrf = ''; showLogin(); });
+    api('logout', {}).then(function () { showLogin(); });
   });
 
   $('toggleBtn').addEventListener('click', function () {

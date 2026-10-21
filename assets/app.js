@@ -12,18 +12,7 @@
   var ring = $('ringProg');
   ring.style.strokeDasharray = RING;
 
-  function api(action, body) {
-    var opts = { credentials: 'same-origin', headers: {} };
-    if (body !== undefined) {
-      opts.method = 'POST';
-      opts.headers['Content-Type'] = 'application/json';
-      opts.body = JSON.stringify(body);
-    }
-    return fetch('api.php?action=' + action + '&_=' + Date.now(), opts).then(function (r) {
-      return r.json().catch(function () { return { error: 'Server error (' + r.status + ')' }; })
-        .then(function (data) { data._ok = r.ok; return data; });
-    });
-  }
+  var api = window.gtApi;
 
   function toast(msg, isErr) {
     var t = $('toast');
@@ -116,7 +105,7 @@
 
   function refresh() {
     return api('state').then(function (d) {
-      if (!d._ok) throw new Error(d.error);
+      if (!d._ok) { toast(d.error || 'Server error', true); return; }
       apply(d);
     }).catch(function () {
       toast('Could not reach the server. Retrying next minute.', true);
@@ -132,7 +121,7 @@
     btn.disabled = true;
     api(undo ? 'unvote' : 'vote', { id: id }).then(function (d) {
       apply(d);
-      if (!d._ok) toast(d.error || 'Vote failed', true);
+      if (!d._ok) { toast(d.error || 'Vote failed', true); refresh(); }
       else toast(undo ? 'Vote removed' : 'Vote counted!');
     }).catch(function () {
       toast('Network error — try again.', true);
